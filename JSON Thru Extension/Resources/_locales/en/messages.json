@@ -1,0 +1,10 @@
+{
+    "extension_name": {
+        "message": "JSON Thru",
+        "description": "The display name for the extension."
+    },
+    "extension_description": {
+        "message": "View your JSON in readable format. Fast, Secure and Open Source.",
+        "description": "Description of what the extension does."
+    }
+}
