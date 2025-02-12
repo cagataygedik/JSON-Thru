@@ -1,9 +1,9 @@
  (function () {
-   // Check if the page content is raw JSON.
+   
    const rawText = document.body.innerText.trim();
    if (!rawText.startsWith("{") && !rawText.startsWith("[")) return;
 
-   // Try to parse the JSON.
+   
    let jsonData;
    try {
      jsonData = JSON.parse(rawText);
@@ -12,19 +12,19 @@
      return;
    }
 
-   // Get the pretty-printed JSON text.
+   
    const originalPlainText = JSON.stringify(jsonData, null, 2);
 
-   // Function to perform syntax highlighting and convert URLs to clickable links.
+   
    function syntaxHighlight(json) {
      if (typeof json !== 'string') {
        json = JSON.stringify(json, undefined, 2);
      }
-     // Escape HTML special characters.
+     
      json = json.replace(/&/g, '&amp;')
                 .replace(/</g, '&lt;')
                 .replace(/>/g, '&gt;');
-     // Replace tokens with spans containing CSS classes.
+     
      return json.replace(
        /("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|\b\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?\b)/g,
        function (match) {
@@ -34,7 +34,7 @@
              cls = 'json-key';
            } else {
              cls = 'json-string';
-             // Remove the surrounding quotes for URL detection.
+             
              const unquoted = match.slice(1, -1);
              if (/^https?:\/\/[^\s]+$/.test(unquoted)) {
                return `<span class="${cls}">"<a href="${unquoted}" target="_blank">${unquoted}</a>"</span>`;
@@ -50,13 +50,13 @@
      );
    }
 
-   // Generate the syntax-highlighted HTML.
+   
    const originalHTML = syntaxHighlight(originalPlainText);
 
-   // Clear the current page content.
+   
    document.documentElement.innerHTML = "";
 
-   // Inject CSS for themes, syntax highlighting, and the toggle button.
+  
    const style = document.createElement("style");
    style.textContent = `
      body {
@@ -119,35 +119,35 @@
    `;
    document.head.appendChild(style);
 
-   // Set the default theme to dark mode.
+   
    document.body.classList.add("dark-mode");
 
-   // Create the toggle button for dark/light mode.
+   
    const toggleButton = document.createElement("button");
    toggleButton.id = "mode-toggle";
-   // In dark mode, display the moon icon (🌙) to indicate the current dark mode.
+   
    toggleButton.textContent = "🌙";
    document.body.appendChild(toggleButton);
 
-   // Toggle the theme on button click.
+   
    let isDarkMode = true;
    toggleButton.addEventListener("click", () => {
      if (isDarkMode) {
        document.body.classList.remove("dark-mode");
        document.body.classList.add("light-mode");
-       // In light mode, display the sun icon (☀️) to indicate the current light mode.
+       
        toggleButton.textContent = "☀️";
        isDarkMode = false;
      } else {
        document.body.classList.remove("light-mode");
        document.body.classList.add("dark-mode");
-       // In dark mode, display the moon icon (🌙).
+       .
        toggleButton.textContent = "🌙";
        isDarkMode = true;
      }
    });
 
-   // Create the <pre> element to display the formatted JSON.
+   
    const pre = document.createElement("pre");
    pre.id = "json-output";
    pre.innerHTML = originalHTML;
